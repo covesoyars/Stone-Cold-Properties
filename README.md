@@ -28,39 +28,23 @@
 .
 ├── cloud_sql_proxy
 ├── db.sqlite3
-├── keys (hidden)
-│   └── <NAME_OF_KEY_FILE>
+├── keys
+│   └── database-258713-9197fefb687a.json
 ├── manage.py
 ├── property_app
 │   ├── __init__.py
-│   ├── __pycache__
-│   │   ├── __init__.cpython-37.pyc
-│   │   ├── admin.cpython-37.pyc
-│   │   ├── apps.cpython-37.pyc
-│   │   ├── models.cpython-37.pyc
-│   │   ├── urls.cpython-37.pyc
-│   │   └── views.cpython-37.pyc
 │   ├── admin.py
 │   ├── apps.py
 │   ├── migrations
 │   │   ├── 0001_initial.py
 │   │   ├── 0002_auto_20191112_1439.py
-│   │   ├── __init__.py
-│   │   └── __pycache__
-│   │       ├── 0001_initial.cpython-37.pyc
-│   │       ├── 0002_auto_20191112_1439.cpython-37.pyc
-│   │       └── __init__.cpython-37.pyc
+│   │   └── __init__.py
 │   ├── models.py
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
 └── stone_cold_props
     ├── __init__.py
-    ├── __pycache__
-    │   ├── __init__.cpython-37.pyc
-    │   ├── settings.cpython-37.pyc
-    │   ├── urls.cpython-37.pyc
-    │   └── wsgi.cpython-37.pyc
     ├── settings.py
     ├── urls.py
     └── wsgi.py
