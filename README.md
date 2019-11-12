@@ -18,6 +18,11 @@
   1. run python manage.py inspectdb <TABLE_NAME>
   2. make sure models.py in property_app is reformatted
   
+  ## How to push database changes to the cloud:
+  1. python manage.py makemigrations
+  2. python manage.py migrate
+  3. If you get error saying table already exists, run: manage.py migrate property_app --fake
+  
 ### Project structure:
 ```
 .
