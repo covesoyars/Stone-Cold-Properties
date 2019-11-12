@@ -12,14 +12,18 @@
       ./cloud_sql_proxy -instances=database-258713:us-central1:instance-508=tcp:<SAME_PORT_NUMBER_IN_SETTINGS> -credential_file=keys/<NAME_OF_KEY_FILE> &
   4. Leave this running in background - this is the connection to the cloud
   5. still in root, run command python manage.py runserver
-  6. Leave this running also, in another tab, 
+  6. Leave this running also, in another tab, run python manage.py shell to play with the database.
+  
+  ### How to pull the recent server-side changes to the app
+  1. run python manage.py inspectdb <TABLE_NAME>
+  2. make sure models.py in property_app is reformatted
   
 ### Project structure:
 ```
 .
 ├── cloud_sql_proxy
 ├── db.sqlite3
-├── keys
+├── keys (hidden)
 │   └── <NAME_OF_KEY_FILE>
 ├── manage.py
 ├── property_app
