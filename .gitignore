@@ -5,6 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
+# HIDE THE KEYS!!
+stone_cold_props/keys/
 
 # Distribution / packaging
 .Python
