@@ -15,7 +15,7 @@
   6. Leave this running also, in another tab, 
   
 ### Project structure:
-'''
+```
 .
 ├── cloud_sql_proxy
 ├── db.sqlite3
@@ -55,4 +55,4 @@
     ├── settings.py
     ├── urls.py
     └── wsgi.py
-'''
+```
