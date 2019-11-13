@@ -28,8 +28,8 @@
 .
 ├── cloud_sql_proxy
 ├── db.sqlite3
-├── keys
-│   └── database-258713-9197fefb687a.json
+├── keys (hidden)
+│   └── <NAME_OF_KEY_FILE>
 ├── manage.py
 ├── property_app
 │   ├── __init__.py
