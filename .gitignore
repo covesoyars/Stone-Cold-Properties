@@ -8,6 +8,8 @@ __pycache__/
 # HIDE THE KEYS!!
 stone_cold_props/keys/
 
+#pycharm
+.idea/
 # Distribution / packaging
 .Python
 build/
