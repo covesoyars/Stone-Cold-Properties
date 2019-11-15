@@ -12,8 +12,9 @@ from django.core.wsgi import get_wsgi_application
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
-os.environ['DJANGO_SETTINGS_MODULE'] = 'YOURAPP.settings'
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "YOURAPP.settings")
+print(BASE_DIR)
+os.environ['DJANGO_SETTINGS_MODULE'] = 'stone_cold_props.settings'
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "stone_cold_props.settings")
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'stone_cold_props.settings'
 
