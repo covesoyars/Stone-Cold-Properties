@@ -109,3 +109,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# cloud sql proxy is different depending on OS:
+stone_cold_props/cloud_sql_proxy
