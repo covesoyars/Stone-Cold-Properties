@@ -112,3 +112,6 @@ venv.bak/
 
 # cloud sql proxy is different depending on OS:
 stone_cold_props/cloud_sql_proxy
+
+#venv
+djangoenv/
