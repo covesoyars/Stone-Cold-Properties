@@ -63,24 +63,11 @@ class Contract(models.Model):
         db_table = 'Contract'
 
 
-class House(models.Model):
-    building = models.ForeignKey(Building, models.DO_NOTHING, db_column='Building_ID', primary_key=True)  # Field name made lowercase.
-    sqft = models.DecimalField(db_column='SqFt', max_digits=4, decimal_places=0, blank=True, null=True)  # Field name made lowercase.
-    bedrooms = models.DecimalField(db_column='Bedrooms', max_digits=1, decimal_places=0, blank=True, null=True)  # Field name made lowercase.
-    bathrooms = models.DecimalField(db_column='Bathrooms', max_digits=1, decimal_places=0, blank=True, null=True)  # Field name made lowercase.
-    rent = models.DecimalField(db_column='Rent', max_digits=6, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
-    available = models.IntegerField(db_column='Available', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'House'
-
-
 class Lease(models.Model):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     unit = models.DecimalField(max_digits=4, decimal_places=0)
-    building = models.DecimalField(max_digits=4, decimal_places=0)
+    building = models.ForeignKey(Building, models.DO_NOTHING, db_column='building')
     tenant = models.CharField(primary_key=True, max_length=11)
     prop_man = models.CharField(max_length=11)
 
