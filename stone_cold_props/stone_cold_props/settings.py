@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME':'Stone_Cold_Properties',
 	'HOST': '127.0.0.1',
-	'PORT': '4051',
+	'PORT': '4005',
 	'USER': 'sql_user1',
 	'PASSWORD': 'sql1'
     }
