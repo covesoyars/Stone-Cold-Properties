@@ -26,6 +26,6 @@ def table(request):
 def search(request):
 	form = searchForm()
 	return render(request, 'property_app/search.html', {'form': form})
-	#return render(request, 'search.html', {'form':form})
+
 
 
