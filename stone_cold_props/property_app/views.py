@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
 from .models import *
 from django.template import loader
+from .search import searchForm
 
 
 def index(request):
 
-	return HttpResponse("Hello world, this is Stone Cold Steve Austin.")
+	 return HttpResponse("Hello world, this is Stone Cold Steve Austin.")
+
 
 def table(request):
 	template_name = loader.get_template('property_app/generic_table.html')
@@ -18,3 +21,11 @@ def table(request):
 	}
 
 	return HttpResponse(template_name.render(context, request))
+
+
+def search(request):
+	form = searchForm()
+	return render(request, 'property_app/search.html', {'form': form})
+	#return render(request, 'search.html', {'form':form})
+
+
