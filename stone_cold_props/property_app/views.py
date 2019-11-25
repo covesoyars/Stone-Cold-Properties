@@ -24,6 +24,14 @@ def table(request):
 
 
 def search(request):
+
+	if request.method == 'POST':
+		form = searchForm(request.POST)
+		if form.is_valid():
+			type = form.cleaned_data['type']
+			city = form.cleaned_data['city']
+			state = form.cleaned_data['state']
+			print(type, state, city)
 	form = searchForm()
 	return render(request, 'property_app/search.html', {'form': form})
 

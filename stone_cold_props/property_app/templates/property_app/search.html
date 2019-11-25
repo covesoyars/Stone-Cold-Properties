@@ -5,9 +5,11 @@
     <title>Living Lookup</title>
 </head>
 <body>
-    <form action="post">
+    <form method="post">
         {% csrf_token %}
         {{ form }}
+        <button type="Search">Search</button>
+
     </form>
 
 

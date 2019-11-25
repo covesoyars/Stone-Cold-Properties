@@ -21,7 +21,7 @@ def rem_duplicate_state():
 class searchForm(forms.Form):
 
 
-    houseType = forms.ChoiceField(choices=[('*', '-'), ('House', 'House'), ('Apartment', 'Apartment')])
+    type = forms.ChoiceField(choices=[('*', '-'), ('House', 'House'), ('Apartment', 'Apartment')])
     city = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_city()])
     state = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_state()])
     address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()])  #this one shouldnt be here but is just for tests
