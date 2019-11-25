@@ -28,10 +28,12 @@ def search(request):
 	if request.method == 'POST':
 		form = searchForm(request.POST)
 		if form.is_valid():
-			type = form.cleaned_data['type']
+			type =form.cleaned_data['type']
 			city = form.cleaned_data['city']
 			state = form.cleaned_data['state']
-			print(type, state, city)
+			result = Address.objects.filter(city = city, state = state)
+			print(result)
+
 	form = searchForm()
 	return render(request, 'property_app/search.html', {'form': form})
 

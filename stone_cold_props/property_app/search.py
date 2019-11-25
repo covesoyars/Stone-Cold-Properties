@@ -33,7 +33,5 @@ class searchForm(forms.Form):
 
 
 
-    #houseType2 = forms.ChoiceField(choices=['items',items])
 
 
-#CHANGE THIS WHEN YOU WANT MORE FORMS
