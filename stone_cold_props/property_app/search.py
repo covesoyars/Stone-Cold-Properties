@@ -24,9 +24,26 @@ class searchForm(forms.Form):
     type = forms.ChoiceField(choices=[('*', '-'), ('House', 'House'), ('Apartment', 'Apartment')])
     city = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_city()])
     state = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_state()])
-    address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()])  #this one shouldnt be here but is just for tests
+    address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()]) #this one shouldnt be here but is just for tests
 
     #TODO get duplates out of the for look mayeb a UNIQUE method
+
+class resultForm(forms.Form):
+    def __init__(self, queryset):
+        super(resultForm, self).__init__()
+        self.query = queryset
+
+        for result in self.query:
+            street = forms.CharField(disabled=True, initial=str(result.street))
+            city = forms.CharField(disabled=True, initial=str(result.city))
+            state  = forms.CharField(disabled=True, initial=str(result.state))
+            zipcode = forms.CharField(disabled=True, initial=str(result.zip))
+
+
+
+
+
+
 
 
 

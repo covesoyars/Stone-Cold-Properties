@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+
+    <ul>
+
+        {% for item in query %}
+            <li>{{item.building}} {{ item.street }} {{item.city}} {{item.state}} {{item.zip}}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
