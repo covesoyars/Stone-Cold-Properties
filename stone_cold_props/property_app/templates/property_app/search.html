@@ -2,18 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Living Lookup</title>
+    <title>Search Units By Address and Features</title>
 </head>
 <body>
+     <div class="header">
+      <h1>Search Units By Address and Features</h1>
+    </div>
     <form method="post" >
         {% csrf_token %}
         {{ form }}
         <button type="Search">Search</button>
 
     </form>
-
-
-
-
 </body>
 </html>

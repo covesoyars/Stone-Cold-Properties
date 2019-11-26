@@ -5,13 +5,15 @@
     <title>Search Results</title>
 </head>
 <body>
+    <div class="header">
+      <h1>Search Results</h1>
+    </div>
 
-    <ul>
 
-        {% for item in query %}
-            <li>{{item.building}} {{ item.street }} {{item.city}} {{item.state}} {{item.zip}}</li>
-        {% endfor %}
-    </ul>
+        {% load django_tables2 %}
+        {% render_table table %}
+
 
 </body>
+
 </html>

@@ -16,17 +16,3 @@ def rem_duplicate_state():
         if x.state not in c:
             c.append(x.state)
     return c
-
-
-
-
-
-
-
-
-
-
-
-
-
-

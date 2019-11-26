@@ -6,7 +6,8 @@ from django.core import serializers
 from .models import *
 from django.template import loader
 from .forms import searchForm, loginForm
-from django.views.generic.list import ListView
+import json
+import django_tables2 as tables
 
 
 def index(request):
@@ -48,10 +49,6 @@ def search(request):
 			bedrooms = form.cleaned_data['Minimum_Bedrooms']
 			bathrooms = form.cleaned_data['Minimum_Bathrooms']
 			rent = form.cleaned_data['Max_Rent']
-			#result = Address.objects.all().filter(city = city, state = state)
-			#for x in result:
-			#	if x.bedrooms < bedrooms
-			#result = result.filter(city = city, state = state, bedrooms = result.bedrooms)
 			result = Unit.objects.filter(available = 1)
 
 
@@ -61,13 +58,22 @@ def search(request):
 				building = Building.objects.get(pk=x.building.building_id)
 				address = Address.objects.get(pk=x.building.building_id)
 
+				# filter out units based on search parameters:
+				if (int(rent)>x.rent and  x.bedrooms >= int(bedrooms) and x.bathrooms >= int(bathrooms)
+						and (address.city.strip() == city or city == '*') and (address.state.strip() == state or state == '*')
+						and (building.type.strip() == type or type == "*")):
 
-				if (int(rent)>x.rent and  x.bedrooms >= int(bedrooms) and x.bathrooms >= int(bathrooms) and (address.city.strip() == city or city == '*') and (address.state.strip() == state or state == '*')  and (building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
-					print('found one')
-					found.append(x)
+					found.append({'rent':int(x.rent),
+								  'address':" ".join([address.street,address.city.strip(), address.state.upper(), str(address.zip)]),
+								  'bathrooms': int(x.bathrooms),
+								  'bedrooms': int(x.bedrooms),
+								  'type': building.type,
+								  'unit': str(int(x.unit_number))
+								  })
 
-			result3 = list(chain(result2, found))
-			request.session['result'] = serializers.serialize('json', result3)
+
+
+			request.session['result'] = json.dumps(found)
 			request.session.modified = True
 			return redirect('search_results')
 
@@ -80,8 +86,24 @@ def search(request):
 def search_results(request):
 	template_name = loader.get_template('property_app/results.html')
 
-	query = [i.object for i in serializers.deserialize('json',request.session['result'])]
-	context = {'query': query}
+	# query = [i.object for i in serializers.deserialize('json',request.session['result'])]
+	query = json.loads(request.session['result'])
+
+	class UnitTable(tables.Table):
+		address = tables.Column()
+		unit = tables.Column()
+		rent = tables.Column()
+		bathrooms = tables.Column()
+		bedrooms = tables.Column()
+		type = tables.Column()
+
+
+	table = UnitTable(query)
+
+
+
+
+	context = {'table': table}
 	return(HttpResponse(template_name.render(context, request)))
 
 
