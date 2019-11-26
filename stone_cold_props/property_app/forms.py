@@ -8,9 +8,10 @@ class searchForm(forms.Form):
     type = forms.ChoiceField(choices=[('*', '-'), ('house', 'House'), ('AptBuild', 'Apartment')])
     city = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_city()])
     state = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_state()])
-    address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()]) #this one shouldnt be here but is just for tests
-    Minimum_Bedrooms = forms.ChoiceField(choices=[(x, x) for x in range(8)])
-    Minimum_Bathrooms = forms.ChoiceField(choices=[(x, x) for x in range(8)])
+    #address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()]) #this one shouldnt be here but is just for tests
+    Minimum_Bedrooms = forms.ChoiceField(choices=[(x, x) for x in range(1,10)])
+    Minimum_Bathrooms = forms.ChoiceField(choices=[(x, x) for x in range(1,10)])
+    Max_Rent = forms.CharField(max_length=5, initial='1000')
 
 
 #TODO add login form here! :P

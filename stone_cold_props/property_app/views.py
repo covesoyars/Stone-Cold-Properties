@@ -47,6 +47,7 @@ def search(request):
 			state = form.cleaned_data['state']
 			bedrooms = form.cleaned_data['Minimum_Bedrooms']
 			bathrooms = form.cleaned_data['Minimum_Bathrooms']
+			rent = form.cleaned_data['Max_Rent']
 			#result = Address.objects.all().filter(city = city, state = state)
 			#for x in result:
 			#	if x.bedrooms < bedrooms
@@ -55,13 +56,13 @@ def search(request):
 
 
 			for x in result:
-				print(type)
+				print(x.rent)
 
 				building = Building.objects.get(pk=x.building.building_id)
 				address = Address.objects.get(pk=x.building.building_id)
 
 
-				if (x.bedrooms >= int(bedrooms) and x.bedrooms >= int(bathrooms) and (address.city.strip() == city or city == '*') and (address.state.strip() == state or state == '*')  and (building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
+				if (int(rent)>x.rent and  x.bedrooms >= int(bedrooms) and x.bathrooms >= int(bathrooms) and (address.city.strip() == city or city == '*') and (address.state.strip() == state or state == '*')  and (building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
 					print('found one')
 					found.append(x)
 
