@@ -51,7 +51,7 @@ def search(request):
 			#for x in result:
 			#	if x.bedrooms < bedrooms
 			#result = result.filter(city = city, state = state, bedrooms = result.bedrooms)
-			result = Unit.objects.all()
+			result = Unit.objects.filter(available = 1)
 
 
 			for x in result:
@@ -61,7 +61,7 @@ def search(request):
 				address = Address.objects.get(pk=x.building.building_id)
 
 
-				if (x.bedrooms >= int(bedrooms) and (address.city.strip() == city or city == '*') and (address.state.strip() == state or state == '*')  and (building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
+				if (x.bedrooms >= int(bedrooms) and x.bedrooms >= int(bathrooms) and (address.city.strip() == city or city == '*') and (address.state.strip() == state or state == '*')  and (building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
 					print('found one')
 					found.append(x)
 
