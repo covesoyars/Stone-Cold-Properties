@@ -46,7 +46,7 @@ def search(request):
 
 			for x in result:
 				print(type)
-				print(x.building.type)
+				print(x.building)
 				if (x.building.floors >= int(bedrooms) and (x.city.strip() == city or city == '*') and (x.state.strip() == state or state == '*')  and (x.building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
 					print('found one')
 					found.append(x)
