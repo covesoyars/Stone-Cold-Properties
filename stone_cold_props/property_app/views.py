@@ -40,7 +40,7 @@ def search(request):
 	if request.method == 'POST':
 		form = searchForm(request.POST)
 		if form.is_valid():
-			result2 =  Address.objects.none()
+			result2 =  Unit.objects.none()
 			type =form.cleaned_data['type']
 			found = list()
 			city = form.cleaned_data['city']
@@ -51,12 +51,17 @@ def search(request):
 			#for x in result:
 			#	if x.bedrooms < bedrooms
 			#result = result.filter(city = city, state = state, bedrooms = result.bedrooms)
-			result = Address.objects.all()
+			result = Unit.objects.all()
+
 
 			for x in result:
 				print(type)
-				print(x.building)
-				if (x.building.floors >= int(bedrooms) and (x.city.strip() == city or city == '*') and (x.state.strip() == state or state == '*')  and (x.building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
+
+				building = Building.objects.get(pk=x.building.building_id)
+				address = Address.objects.get(pk=x.building.building_id)
+
+
+				if (x.bedrooms >= int(bedrooms) and (address.city.strip() == city or city == '*') and (address.state.strip() == state or state == '*')  and (building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
 					print('found one')
 					found.append(x)
 
