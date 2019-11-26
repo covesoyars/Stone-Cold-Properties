@@ -5,13 +5,22 @@ from django.http import HttpResponse
 from django.core import serializers
 from .models import *
 from django.template import loader
-from .search import searchForm, resultForm
+from .forms import searchForm, loginForm
 from django.views.generic.list import ListView
 
 
 def index(request):
 
-	 return HttpResponse("Hello world, this is Stone Cold Steve Austin.")
+	# return HttpResponse("Hello world, this is Stone Cold Steve Austin.")
+	if request.method == 'POST':
+		form = loginForm(request.POST)
+		if form.is_valid():
+			print("valid")
+
+
+
+	form = loginForm()
+	return render(request, 'property_app/login.html', {'form': form})
 
 
 def table(request):

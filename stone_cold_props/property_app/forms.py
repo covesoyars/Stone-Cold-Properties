@@ -12,4 +12,8 @@ class searchForm(forms.Form):
     Minimum_Bedrooms = forms.ChoiceField(choices=[(x, x) for x in range(8)])
     Minimum_Bathrooms = forms.ChoiceField(choices=[(x, x) for x in range(8)])
 
+
 #TODO add login form here! :P
+class loginForm(forms.Form):
+    user = forms.CharField(widget=forms.TextInput())
+    password = forms.CharField(widget=forms.PasswordInput())
