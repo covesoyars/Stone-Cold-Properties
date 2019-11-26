@@ -18,15 +18,16 @@ def rem_duplicate_state():
             c.append(x.state)
     return c
 
+
 class searchForm(forms.Form):
 
-
-    type = forms.ChoiceField(choices=[('*', '-'), ('House', 'House'), ('Apartment', 'Apartment')])
+    type = forms.ChoiceField(choices=[('*', '-'), ('house', 'House'), ('AptBuild', 'Apartment')])
     city = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_city()])
     state = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_state()])
     address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()]) #this one shouldnt be here but is just for tests
+    Minimum_Bedrooms = forms.ChoiceField(choices=[(x, x) for x in range(8)])
+    Minimum_Bathrooms = forms.ChoiceField(choices=[(x, x) for x in range(8)])
 
-    #TODO get duplates out of the for look mayeb a UNIQUE method
 
 class resultForm(forms.Form):
     def __init__(self, queryset):

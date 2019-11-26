@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
@@ -29,12 +31,28 @@ def search(request):
 	if request.method == 'POST':
 		form = searchForm(request.POST)
 		if form.is_valid():
-
+			result2 =  Address.objects.none()
 			type =form.cleaned_data['type']
+			found = list()
 			city = form.cleaned_data['city']
 			state = form.cleaned_data['state']
-			result = Address.objects.filter(city = city, state = state)
-			request.session['result'] = serializers.serialize('json', result)
+			bedrooms = form.cleaned_data['Minimum_Bedrooms']
+			bathrooms = form.cleaned_data['Minimum_Bathrooms']
+			#result = Address.objects.all().filter(city = city, state = state)
+			#for x in result:
+			#	if x.bedrooms < bedrooms
+			#result = result.filter(city = city, state = state, bedrooms = result.bedrooms)
+			result = Address.objects.all()
+
+			for x in result:
+				print(type)
+				print(x.building.type)
+				if (x.building.floors >= int(bedrooms) and (x.city.strip() == city or city == '*') and (x.state.strip() == state or state == '*')  and (x.building.type.strip() == type or type == "*")):			#filtering out all that dosent habve enough bathrooms ect
+					print('found one')
+					found.append(x)
+
+			result3 = list(chain(result2, found))
+			request.session['result'] = serializers.serialize('json', result3)
 			request.session.modified = True
 			return redirect('search_results')
 
