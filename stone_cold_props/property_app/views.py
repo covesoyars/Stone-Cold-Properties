@@ -126,15 +126,33 @@ def expiring_contracts_search(request):
 						{
 							'name': " ".join([client.first_name, client.last_name]),
 							'phone': client.phone,
-							'building_id': building.building_id,
+							'building_id': int(building.building_id),
 							'address': " ".join([address.street,address.city.strip(), address.state.upper(), str(address.zip)]),
-							'end': contract.end_date,
-							'pay': contract.payment
+							'end': str(contract.end_date),
+							'pay': int(contract.payment)
 						}
 					)
-			request.session['result'] = json.dumps(expring_contracts)
+			request.session['expiring_contract_result'] = json.dumps(expring_contracts)
 			request.session.modified = True
-			return redirect('results_by_address')
+			return redirect('expiring_contracts_results')
 
 	form = expiringContractForm()
 	return render(request, 'property_app/expiring_contracts_search.html', {'form':form})
+
+def expiring_contracts_results(request):
+	template_name = loader.get_template('property_app/expiring_contracts_results.html')
+	query = json.loads(request.session['expiring_contract_result'])
+
+
+	class ExpiringContractTable(tables.Table):
+
+		name = tables.Column()
+		phone = tables.Column()
+		building_id = tables.Column()
+		address = tables.Column()
+		pay = tables.Column()
+		end = tables.Column()
+
+	table = ExpiringContractTable(query)
+	context = {'table': table}
+	return (HttpResponse(template_name.render(context, request)))
