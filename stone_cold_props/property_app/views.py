@@ -11,6 +11,7 @@ import django_tables2 as tables
 from datetime import date
 from dateutil.relativedelta import relativedelta
 import pyrebase
+from django.shortcuts import get_object_or_404
 config = {
     'apiKey': "AIzaSyBIiU-vYyoHB3WqAkzgX9B2FtMzyKu9PSk",
     'authDomain': "database-258713.firebaseapp.com",
@@ -188,17 +189,19 @@ def tentant_search(request):
 			leases = Lease.objects.all()
 			for x in leases:
 				id = x.building.building_id
+				print(x.prop_man + " 1")
+				print(manager + " 2")
 				address = Address.objects.get(pk=id)
-				#manager = PropertyManager.objects.get(pk=x.prop_man)
-				contract = Contract.objects.all().filter(building=id)
-				print(x.prop_man)
-				#client = Client.objects.get(pk=contract.SSN)			#TODO IT SAYS SSN IS NOT AN ATRIBUTE OF CONTRACTS EVEN THOUGH IT IS? FIX THIS AND WELL BE GOOD
+				manager_object = get_object_or_404(PropertyManager, pk=x.prop_man)
+				# contract = Contract.objects.filter(building=id) #this is return a query set and not an indvidual object
+				# print(contract.building + " 3")
+				#client = Client.objects.get(pk=contract.ssn)			#TODO IT SAYS SSN IS NOT AN ATRIBUTE OF CONTRACTS EVEN THOUGH IT IS? FIX THIS AND WELL BE GOOD
 				if 		((address.city.strip() == city or city == '*') and
 						(address.state.strip() == state or state == '*') and
 						(address.zip == zip or zip == '*') and
 						(address.street.strip() == street or street == '*') and
-						(x.unit == unit or unit == '*') #and
-						#(manager.first_name + " " + manager.last_name == manager or manager== '*') #and	TODO ALSO  PROPERTYMANAGER ISNT A THING I THINK OUR MODEL IS OUTOF DATE BUT I DONT WANT TO UPDATE IT CUASE IT BREAKS EVERYTHING
+						(x.unit == unit or unit == '*') and
+						(manager_object.first_name + " " + manager_object.last_name == manager or manager== '*') #and	TODO ALSO  PROPERTYMANAGER ISNT A THING I THINK OUR MODEL IS OUTOF DATE BUT I DONT WANT TO UPDATE IT CUASE IT BREAKS EVERYTHING
 						#(client.first_name + " " + client.last_name == owner or owner=='*')):
 				):
 

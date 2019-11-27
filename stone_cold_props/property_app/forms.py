@@ -29,7 +29,7 @@ class tenantSearchForm(forms.Form):
     zip = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_zip()])
     address = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_address()])
     state = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_state()])
-    manager = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_manager() ])
+    manager = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_manager()])
     owner = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_owner()])
     unit = forms.CharField(max_length=5, initial='*')
    # address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()]) #this one shouldnt be here but is just for tests
