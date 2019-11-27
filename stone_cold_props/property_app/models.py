@@ -52,35 +52,23 @@ class Client(models.Model):
 
 
 class Contract(models.Model):
-    ssn = models.ForeignKey(Client, models.DO_NOTHING, db_column='SSN', blank=True, null=True)  # Field name made lowercase.
-    building = models.ForeignKey(Building, models.DO_NOTHING, db_column='Building_ID', blank=True, null=True)  # Field name made lowercase.
+    ssn = models.ForeignKey(Client, models.DO_NOTHING, db_column='SSN', primary_key=True)  # Field name made lowercase.
+    building = models.ForeignKey(Building, models.DO_NOTHING, db_column='Building_ID')  # Field name made lowercase.
+    payment = models.DecimalField(db_column='Payment', max_digits=7, decimal_places=0, blank=True, null=True)  # Field name made lowercase.
     start_date = models.DateField(db_column='Start_Date', blank=True, null=True)  # Field name made lowercase.
     end_date = models.DateField(db_column='End_Date', blank=True, null=True)  # Field name made lowercase.
-    payment = models.DecimalField(db_column='Payment', max_digits=7, decimal_places=0, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'Contract'
-
-
-class House(models.Model):
-    building = models.ForeignKey(Building, models.DO_NOTHING, db_column='Building_ID', primary_key=True)  # Field name made lowercase.
-    sqft = models.DecimalField(db_column='SqFt', max_digits=4, decimal_places=0, blank=True, null=True)  # Field name made lowercase.
-    bedrooms = models.DecimalField(db_column='Bedrooms', max_digits=1, decimal_places=0, blank=True, null=True)  # Field name made lowercase.
-    bathrooms = models.DecimalField(db_column='Bathrooms', max_digits=1, decimal_places=0, blank=True, null=True)  # Field name made lowercase.
-    rent = models.DecimalField(db_column='Rent', max_digits=6, decimal_places=2, blank=True, null=True)  # Field name made lowercase.
-    available = models.IntegerField(db_column='Available', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'House'
+        unique_together = (('ssn', 'building'),)
 
 
 class Lease(models.Model):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     unit = models.DecimalField(max_digits=4, decimal_places=0)
-    building = models.DecimalField(max_digits=4, decimal_places=0)
+    building = models.ForeignKey(Building, models.DO_NOTHING, db_column='building')
     tenant = models.CharField(primary_key=True, max_length=11)
     prop_man = models.CharField(max_length=11)
 
@@ -112,10 +100,10 @@ class Manages(models.Model):
 class PropertyManager(models.Model):
     first_name = models.CharField(db_column='First_Name', max_length=15, blank=True, null=True)  # Field name made lowercase.
     last_name = models.CharField(db_column='Last_Name', max_length=20, blank=True, null=True)  # Field name made lowercase.
-    start_date = models.CharField(db_column='Start_Date', max_length=10, blank=True, null=True)  # Field name made lowercase.
     phone = models.CharField(db_column='Phone', max_length=12, blank=True, null=True)  # Field name made lowercase.
     ssn = models.CharField(db_column='SSN', primary_key=True, max_length=11)  # Field name made lowercase.
     level = models.ForeignKey(Level, models.DO_NOTHING, db_column='level', blank=True, null=True)
+    start_date = models.DateField(db_column='Start_Date', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False

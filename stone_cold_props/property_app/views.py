@@ -9,6 +9,7 @@ from .forms import *
 import json
 import django_tables2 as tables
 from datetime import date
+from dateutil.relativedelta import relativedelta
 
 
 def index(request):
@@ -106,18 +107,34 @@ def expiring_contracts_search(request):
 		form = expiringContractForm(request.POST)
 		if form.is_valid():
 			contracts = Contract.objects.all()
-
+			expring_contracts = []
 			for contract in contracts:
-			 	print(contract.start_date)
-			# get current date
-			fmt = '%Y-%m-%d'
-			today = date.today()
 
-			# get end date from contract
+				# get expiring contracts:
+				end = contract.end_date
+				today = date.today()
+				months_ahead = int(form.cleaned_data['expr'])
+				end_of_window = today + relativedelta(months=+months_ahead)
 
-			months_ahead = int(form.cleaned_data['expr'])
+				if end < end_of_window:
+					# get information about building, its address, and client
+					building = Building.objects.get(pk=contract.building.building_id)
+					address = Address.objects.get(pk=contract.building.building_id)
+					client = Client.objects.get(pk=contract.ssn.ssn)
 
-			# get information about building, its address, and client
+					expring_contracts.append(
+						{
+							'name': " ".join([client.first_name, client.last_name]),
+							'phone': client.phone,
+							'building_id': building.building_id,
+							'address': " ".join([address.street,address.city.strip(), address.state.upper(), str(address.zip)]),
+							'end': contract.end_date,
+							'pay': contract.payment
+						}
+					)
+			request.session['result'] = json.dumps(expring_contracts)
+			request.session.modified = True
+			return redirect('results_by_address')
 
 	form = expiringContractForm()
 	return render(request, 'property_app/expiring_contracts_search.html', {'form':form})
