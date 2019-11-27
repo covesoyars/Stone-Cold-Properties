@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-from .search import rem_duplicate_city, rem_duplicate_state
+from .search import *
 
 
 class searchForm(forms.Form):
@@ -21,3 +21,16 @@ class loginForm(forms.Form):
 
 class expiringContractForm(forms.Form):
     expr = forms.ChoiceField(label='Expring in:',choices=[('1', '1 month'), ('6', '6 months'), ('12', '12 months')])
+
+
+class tenantSearchForm(forms.Form):
+
+    type = forms.ChoiceField(choices=[('*', '-'), ('house', 'House'), ('AptBuild', 'Apartment')])
+    city = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_city()])
+    zip = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_zip()])
+    address = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_address()])
+    state = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_state()])
+    manager = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_manager() ])
+    owner = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_owner()])
+    unit = forms.CharField(max_length=5, initial='*')
+   # address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()]) #this one shouldnt be here but is just for tests

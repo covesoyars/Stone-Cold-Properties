@@ -156,3 +156,68 @@ def expiring_contracts_results(request):
 	table = ExpiringContractTable(query)
 	context = {'table': table}
 	return (HttpResponse(template_name.render(context, request)))
+
+
+
+
+
+
+def tentant_search(request):
+	if request.method == 'POST':
+		form = tenantSearchForm(request.POST)
+		if form.is_valid():
+			tentants_found = []
+			city = form.cleaned_data['city']
+			state = form.cleaned_data['state']
+			street = form.cleaned_data['address']
+			zip = form.cleaned_data['zip']
+			unit = form.cleaned_data['unit']
+			manager = form.cleaned_data['manager']
+			owner = form.cleaned_data['owner']
+			leases = Lease.objects.all()
+			for x in leases:
+				id = x.building.building_id
+				address = Address.objects.get(pk=id)
+
+				contract = Contract.objects.all().filter(building=id)
+				#client = Client.objects.get(pk=contract.SSN)			#TODO IT SAYS SSN IS NOT AN ATRIBUTE OF CONTRACTS EVEN THOUGH IT IS? FIX THIS AND WELL BE GOOD
+				if 		((address.city.strip() == city or city == '*') and
+						(address.state.strip() == state or state == '*') and
+						(address.zip == zip or zip == '*') and
+						(address.street.strip() == street or street == '*') and
+						(x.unit == unit or unit == '*') and
+						(x.prop_man == manager or manager== '*') #and
+						#(client.first_name + " " + client.last_name == owner or owner=='*')):
+				):
+					found_tanant = Tenant.objects.get(pk =x.tenant )
+					tentants_found.append(
+						{
+							'name': " ".join([found_tanant.first_name, found_tanant.last_name]),
+							'phone': found_tanant.phone,
+							'address': " ".join(
+								[address.street, address.city.strip(), address.state.upper(), str(address.zip), str(x.unit)]),
+
+						}
+					)
+
+			request.session['tenants_search'] = json.dumps(tentants_found)
+			request.session.modified = True
+			return redirect('tenant_search_results')
+
+	form = tenantSearchForm()
+	return render(request, 'property_app/tenant_search.html', {'form':form})
+
+
+def tenant_search_results(request):
+	template_name = loader.get_template('property_app/tenant_search_result.html')
+	query = json.loads(request.session['tenants_search'])
+	class tenantInfoTable(tables.Table):
+
+		name = tables.Column()
+		phone = tables.Column()
+		address = tables.Column()
+
+
+	table = tenantInfoTable(query)
+	context = {'table': table}
+	return (HttpResponse(template_name.render(context, request)))
