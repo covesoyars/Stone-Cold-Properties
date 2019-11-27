@@ -25,7 +25,6 @@ class expiringContractForm(forms.Form):
 
 class tenantSearchForm(forms.Form):
 
-    type = forms.ChoiceField(choices=[('*', '-'), ('house', 'House'), ('AptBuild', 'Apartment')])
     city = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_city()])
     zip = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_zip()])
     address = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_address()])

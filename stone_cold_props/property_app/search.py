@@ -21,7 +21,7 @@ def rem_duplicate_zip():
     c = ['*']
     for x in w:
         if x.zip not in c:
-            c.append(x.city)
+            c.append(x.zip)
     return c
 
 def rem_duplicate_address():

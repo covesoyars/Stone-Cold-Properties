@@ -167,28 +167,30 @@ def tentant_search(request):
 		form = tenantSearchForm(request.POST)
 		if form.is_valid():
 			tentants_found = []
-			city = form.cleaned_data['city']
-			state = form.cleaned_data['state']
-			street = form.cleaned_data['address']
+			city = form.cleaned_data['city'].strip()
+			state = form.cleaned_data['state'].strip()
+			street = form.cleaned_data['address'].strip()
 			zip = form.cleaned_data['zip']
 			unit = form.cleaned_data['unit']
-			manager = form.cleaned_data['manager']
-			owner = form.cleaned_data['owner']
+			manager = form.cleaned_data['manager'].strip()
+			owner = form.cleaned_data['owner'].strip()
 			leases = Lease.objects.all()
 			for x in leases:
 				id = x.building.building_id
 				address = Address.objects.get(pk=id)
-
+				#manager = PropertyManager.objects.get(pk=x.prop_man)
 				contract = Contract.objects.all().filter(building=id)
+				print(x.prop_man)
 				#client = Client.objects.get(pk=contract.SSN)			#TODO IT SAYS SSN IS NOT AN ATRIBUTE OF CONTRACTS EVEN THOUGH IT IS? FIX THIS AND WELL BE GOOD
 				if 		((address.city.strip() == city or city == '*') and
 						(address.state.strip() == state or state == '*') and
 						(address.zip == zip or zip == '*') and
 						(address.street.strip() == street or street == '*') and
-						(x.unit == unit or unit == '*') and
-						(x.prop_man == manager or manager== '*') #and
+						(x.unit == unit or unit == '*') #and
+						#(manager.first_name + " " + manager.last_name == manager or manager== '*') #and	TODO ALSO  PROPERTYMANAGER ISNT A THING I THINK OUR MODEL IS OUTOF DATE BUT I DONT WANT TO UPDATE IT CUASE IT BREAKS EVERYTHING
 						#(client.first_name + " " + client.last_name == owner or owner=='*')):
 				):
+
 					found_tanant = Tenant.objects.get(pk =x.tenant )
 					tentants_found.append(
 						{
