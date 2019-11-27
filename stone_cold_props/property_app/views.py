@@ -23,19 +23,12 @@ config = {
   }
 firebase = pyrebase.initialize_app(config)
 
-
-def index(request):
-
-	# return HttpResponse("Hello world, this is Stone Cold Steve Austin.")
-	if request.method == 'POST':
-		form = loginForm(request.POST)
-		if form.is_valid():
-			print("valid")
+auth = firebase.auth()
 
 
+def signin(request):
 
-	form = loginForm()
-	return render(request, 'property_app/login.html', {'form': form})
+	return render(request, 'signIn.html')
 
 
 def table(request):
@@ -51,6 +44,9 @@ def table(request):
 
 
 def search_by_address(request):
+	email = request.POST.get('email')
+	password = request.POST.get('pass')
+	user = auth.sign_in_with_email_and_password(email.password)
 
 	if request.method == 'POST':
 		form = searchForm(request.POST)
