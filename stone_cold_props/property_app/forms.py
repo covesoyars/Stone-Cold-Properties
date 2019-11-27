@@ -14,7 +14,10 @@ class searchForm(forms.Form):
     Max_Rent = forms.CharField(max_length=5, initial='1000')
 
 
-#TODO add login form here! :P
 class loginForm(forms.Form):
     user = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+class expiringContractForm(forms.Form):
+    expr = forms.ChoiceField(label='Expring in:',choices=[('1', '1 month'), ('6', '6 months'), ('12', '12 months')])

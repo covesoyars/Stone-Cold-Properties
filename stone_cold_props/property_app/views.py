@@ -5,9 +5,10 @@ from django.http import HttpResponse
 from django.core import serializers
 from .models import *
 from django.template import loader
-from .forms import searchForm, loginForm
+from .forms import *
 import json
 import django_tables2 as tables
+from datetime import date
 
 
 def index(request):
@@ -36,12 +37,11 @@ def table(request):
 	return HttpResponse(template_name.render(context, request))
 
 
-def search(request):
+def search_by_address(request):
 
 	if request.method == 'POST':
 		form = searchForm(request.POST)
 		if form.is_valid():
-			result2 =  Unit.objects.none()
 			type =form.cleaned_data['type']
 			found = list()
 			city = form.cleaned_data['city']
@@ -75,18 +75,17 @@ def search(request):
 
 			request.session['result'] = json.dumps(found)
 			request.session.modified = True
-			return redirect('search_results')
+			return redirect('results_by_address')
 
 
 
 	form = searchForm()
-	return render(request, 'property_app/search.html', {'form': form})
+	return render(request, 'property_app/search_by_address.html', {'form': form})
 
 
-def search_results(request):
-	template_name = loader.get_template('property_app/results.html')
+def results_by_address(request):
 
-	# query = [i.object for i in serializers.deserialize('json',request.session['result'])]
+	template_name = loader.get_template('property_app/results_by_address.html')
 	query = json.loads(request.session['result'])
 
 	class UnitTable(tables.Table):
@@ -97,13 +96,28 @@ def search_results(request):
 		bedrooms = tables.Column()
 		type = tables.Column()
 
-
 	table = UnitTable(query)
-
-
-
-
 	context = {'table': table}
 	return(HttpResponse(template_name.render(context, request)))
 
+def expiring_contracts_search(request):
 
+	if request.method == 'POST':
+		form = expiringContractForm(request.POST)
+		if form.is_valid():
+			contracts = Contract.objects.all()
+
+			for contract in contracts:
+			 	print(contract.start_date)
+			# get current date
+			fmt = '%Y-%m-%d'
+			today = date.today()
+
+			# get end date from contract
+
+			months_ahead = int(form.cleaned_data['expr'])
+
+			# get information about building, its address, and client
+
+	form = expiringContractForm()
+	return render(request, 'property_app/expiring_contracts_search.html', {'form':form})
