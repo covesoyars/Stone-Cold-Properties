@@ -10,6 +10,17 @@ import json
 import django_tables2 as tables
 from datetime import date
 from dateutil.relativedelta import relativedelta
+import pyrebase
+config = {
+    'apiKey': "AIzaSyBIiU-vYyoHB3WqAkzgX9B2FtMzyKu9PSk",
+    'authDomain': "database-258713.firebaseapp.com",
+    'databaseURL': "https://database-258713.firebaseio.com/",
+    'projectId': "database-258713",
+    'storageBucket': "database-258713.appspot.com",
+    'messagingSenderId': "225140590988",
+    'appId': "1:225140590988:web:b5f4f273d0250782e6eea9"
+  }
+firebase = pyrebase.initialize_app(config)
 
 
 def index(request):
