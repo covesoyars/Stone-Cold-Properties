@@ -58,6 +58,7 @@ def search_by_address(request):
 			bathrooms = form.cleaned_data['Minimum_Bathrooms']
 			rent = form.cleaned_data['Max_Rent']
 			result = Unit.objects.filter(available = 1)
+			sqFt = form.cleaned_data['Minimum_SqFt']
 
 
 			for x in result:
@@ -69,14 +70,16 @@ def search_by_address(request):
 				# filter out units based on search parameters:
 				if (int(rent)>x.rent and  x.bedrooms >= int(bedrooms) and x.bathrooms >= int(bathrooms)
 						and (address.city.strip() == city or city == '*') and (address.state.strip() == state or state == '*')
-						and (building.type.strip() == type or type == "*")):
+						and (building.type.strip() == type or type == "*")
+						and (int(sqFt) < x.sqft)):
 
 					found.append({'rent':int(x.rent),
 								  'address':" ".join([address.street,address.city.strip(), address.state.upper(), str(address.zip)]),
 								  'bathrooms': int(x.bathrooms),
 								  'bedrooms': int(x.bedrooms),
 								  'type': building.type,
-								  'unit': str(int(x.unit_number))
+								  'unit': str(int(x.unit_number)),
+								  'sqft':str(x.sqft)
 								  })
 
 
@@ -105,6 +108,7 @@ def results_by_address(request):
 		bathrooms = tables.Column()
 		bedrooms = tables.Column()
 		type = tables.Column()
+		sqft = tables.Column()
 
 	table = UnitTable(query)
 	context = {'table': table}

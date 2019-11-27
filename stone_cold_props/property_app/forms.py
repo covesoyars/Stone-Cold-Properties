@@ -11,6 +11,7 @@ class searchForm(forms.Form):
     #address = forms.ChoiceField(choices=[(x.street, x.street) for x in Address.objects.all()]) #this one shouldnt be here but is just for tests
     Minimum_Bedrooms = forms.ChoiceField(choices=[(x, x) for x in range(1,10)])
     Minimum_Bathrooms = forms.ChoiceField(choices=[(x, x) for x in range(1,10)])
+    Minimum_SqFt = forms.CharField(max_length=6, initial='50')
     Max_Rent = forms.CharField(max_length=5, initial='1000')
 
 
