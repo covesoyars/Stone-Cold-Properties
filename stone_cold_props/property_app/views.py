@@ -26,9 +26,9 @@ firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 
 
-def signin(request):
+def signIn(request):
 
-	return render(request, 'signIn.html')
+	return render(request, 'property_app/signIn.html')
 
 
 def table(request):
@@ -44,9 +44,8 @@ def table(request):
 
 
 def search_by_address(request):
-	email = request.POST.get('email')
-	password = request.POST.get('pass')
-	user = auth.sign_in_with_email_and_password(email.password)
+
+
 
 	if request.method == 'POST':
 		form = searchForm(request.POST)
@@ -86,7 +85,9 @@ def search_by_address(request):
 			request.session.modified = True
 			return redirect('results_by_address')
 
-
+	email = request.POST.get('email')
+	password = request.POST.get('pass')
+	user = auth.sign_in_with_email_and_password(email, password)
 
 	form = searchForm()
 	return render(request, 'property_app/search_by_address.html', {'form': form})
@@ -179,7 +180,7 @@ def tentant_search(request):
 			state = form.cleaned_data['state'].strip()
 			street = form.cleaned_data['address'].strip()
 			zip = form.cleaned_data['zip']
-			unit = form.cleaned_data['unit']
+			unit = form.cleaned_data['unit'].strip()
 			manager = form.cleaned_data['manager'].strip()
 			owner = form.cleaned_data['owner'].strip()
 			leases = Lease.objects.all()
