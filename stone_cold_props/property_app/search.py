@@ -47,3 +47,11 @@ def rem_duplicate_owner():
         if x.first_name + " "+ x.last_name not in c:
             c.append(x.first_name + " "+ x.last_name)
     return c
+
+def rem_duplicate_tenant():
+    w = Tenant.objects.all()
+    c = ['*']
+    for x in w:
+        if x.first_name + " "+ x.last_name not in c:
+            c.append(x.first_name + " "+ x.last_name)
+    return c

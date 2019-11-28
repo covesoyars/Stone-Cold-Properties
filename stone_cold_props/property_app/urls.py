@@ -10,7 +10,9 @@ urlpatterns = [
     path('expiring_contracts_search/', views.expiring_contracts_search, name='expiring_contracts_search'),
     path('expiring_contracts_results/', views.expiring_contracts_results, name='expiring_contracts_results'),
     path('tenant_search/', views.tentant_search, name='tenant_search'),
-    path('tenant_search_results/', views.tenant_search_results, name='tenant_search_results')
+    path('tenant_search_results/', views.tenant_search_results, name='tenant_search_results'),
+    path('property_manager_search/', views.property_manager_search, name='property_manager_search'),
+    path('manager_results/', views.manager_results, name='manager_results')
 
 
     ]
