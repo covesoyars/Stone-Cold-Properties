@@ -79,10 +79,9 @@ class Lease(models.Model):
 
 
 class Level(models.Model):
-    level = models.DecimalField(max_digits=1, decimal_places=0)
+    level = models.DecimalField(primary_key=True, max_digits=1, decimal_places=0)
     salary = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     commission = models.DecimalField(max_digits=2, decimal_places=2, blank=True, null=True)
-    ssn = models.ForeignKey('PropertyManager', models.DO_NOTHING, db_column='SSN', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -104,6 +103,7 @@ class PropertyManager(models.Model):
     phone = models.CharField(db_column='Phone', max_length=12, blank=True, null=True)  # Field name made lowercase.
     ssn = models.CharField(db_column='SSN', primary_key=True, max_length=11)  # Field name made lowercase.
     start_date = models.DateField(db_column='Start_Date', blank=True, null=True)  # Field name made lowercase.
+    level = models.ForeignKey(Level, models.DO_NOTHING, db_column='Level', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False

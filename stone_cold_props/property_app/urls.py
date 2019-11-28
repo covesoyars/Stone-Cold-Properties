@@ -11,8 +11,10 @@ urlpatterns = [
     path('expiring_contracts_results/', views.expiring_contracts_results, name='expiring_contracts_results'),
     path('tenant_search/', views.tentant_search, name='tenant_search'),
     path('tenant_search_results/', views.tenant_search_results, name='tenant_search_results'),
-    path('property_manager_search/', views.property_manager_search, name='property_manager_search'),
-    path('manager_results/', views.manager_results, name='manager_results')
+    path('property_manager_search_address/', views.property_manager_search_by_address, name='property_manager_search_address'),
+    path('manager_results_address/', views.manager_results_by_address, name='manager_results_address'),
+    path('property_manager_search_owner/', views.manager_search_by_owner, name='search_manager_owner'),
+    path('manager_results_owner', views.manager_results_by_owner, name='manager_results_owner'),
 
 
     ]

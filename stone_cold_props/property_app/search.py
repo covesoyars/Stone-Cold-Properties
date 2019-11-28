@@ -40,9 +40,12 @@ def rem_duplicate_manager():
             c.append(x.first_name + " "+ x.last_name)
     return c
 
-def rem_duplicate_owner():
+def rem_duplicate_owner(wild_card=True):
     w = Client.objects.all()
-    c = ['*']
+    if wild_card:
+        c = ['*']
+    else:
+        c = []
     for x in w:
         if x.first_name + " "+ x.last_name not in c:
             c.append(x.first_name + " "+ x.last_name)
