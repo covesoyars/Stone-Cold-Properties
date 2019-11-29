@@ -1,6 +1,8 @@
 from itertools import chain
 
 from django.shortcuts import render, redirect
+from decimal import Decimal
+from django.db import connection
 from django.http import HttpResponse
 from django.core import serializers
 from .models import *
@@ -378,3 +380,43 @@ def admin_page(request):
 	password = request.POST.get('pass2')
 	user = auth.sign_in_with_email_and_password(email, password)
 	return render(request, 'property_app/adminPage.html')
+
+def admin_sql_bar(request):
+
+	if request.method == 'POST':
+
+		form = AdminSQLForm(request.POST)
+
+		if form.is_valid():
+			result = []
+			query = form.cleaned_data['query']
+			cursor = connection.cursor()
+			try:
+				cursor.execute(query)
+			except:
+				return redirect('admin_sql')
+			header = [i[0] for i in cursor.description]
+			for row in cursor.fetchall():
+				columns = {k: v for k, v in zip(header, [i for i in row])}
+				for column in columns:
+					if type(columns[column]) == Decimal:
+
+						columns[column] = float(columns[column])
+					if type(columns[column] == date):
+						columns[column] = str(columns[column])
+				result.append(columns)
+
+			request.session['sql_results'] = json.dumps(result)
+			request.session.modified = True
+			return redirect('sql_results')
+
+	form = AdminSQLForm()
+	return render(request, 'property_app/admin_sql_bar.html', {'form': form})
+
+def sql_results(request):
+	template_name = loader.get_template('property_app/sql_results.html')
+	query = json.loads(request.session['sql_results'])
+	columns = query[0].keys()
+	table = SQLResultsTable(query,extra_columns=[(column, tables.Column()) for column in columns])
+	context = {'table': table}
+	return (HttpResponse(template_name.render(context, request)))

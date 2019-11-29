@@ -57,3 +57,7 @@ class buildingSearchForm(forms.Form):
 
 class ManagerOwnerSearchForm(forms.Form):
     owner = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_owner(wild_card=False)])
+
+
+class AdminSQLForm(forms.Form):
+    query = forms.CharField(widget=forms.TextInput(attrs={'size':160}), min_length=0, required=True)

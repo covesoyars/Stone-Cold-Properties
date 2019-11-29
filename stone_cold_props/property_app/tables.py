@@ -30,6 +30,12 @@ class UnitTable(tables.Table):
 	type = tables.Column()
 	sqft = tables.Column()
 
+class SQLResultsTable(tables.Table):
+	static = tables.Column(visible=False)
+
+
+
+
 class BuildingInfo(tables.Table):
 
 	building_ID =  tables.Column()
