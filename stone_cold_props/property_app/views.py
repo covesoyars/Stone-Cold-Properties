@@ -10,7 +10,7 @@ from.tables import *
 import json
 from datetime import date
 from dateutil.relativedelta import relativedelta
-import pyrebase
+import pyrebase.pyrebase
 from django.shortcuts import get_object_or_404
 
 # Connection for employees to firebase login authentification
@@ -23,9 +23,9 @@ config = {
 	'messagingSenderId': "225140590988",
 	'appId': "1:225140590988:web:b5f4f273d0250782e6eea9"
 }
-firebase = pyrebase.initialize_app(config)
-
-auth = firebase.auth()
+# firebase = pyrebase.initialize_app(config)
+#
+# auth = firebase.auth()
 
 # Admin connection
 configAdmin = {
@@ -38,9 +38,9 @@ configAdmin = {
     'appId': "1:999208004782:web:cf8047d08b5e438725913f"
 }
 # Initialize FirebaseAdmin
-firebaseAdmin = pyrebase.initializeApp(configAdmin)
-
-auth2 = firebaseAdmin.auth()
+# firebaseAdmin = pyrebase.initializeApp(configAdmin)
+#
+# auth2 = firebaseAdmin.auth()
 
 
 def signIn(request):
