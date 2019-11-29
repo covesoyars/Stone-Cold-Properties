@@ -25,9 +25,9 @@ config = {
 	'messagingSenderId': "225140590988",
 	'appId': "1:225140590988:web:b5f4f273d0250782e6eea9"
 }
-# firebase = pyrebase.initialize_app(config)
-#
-# auth = firebase.auth()
+firebase = pyrebase.initialize_app(config)
+
+auth = firebase.auth()
 
 # Admin connection
 configAdmin = {
@@ -40,9 +40,9 @@ configAdmin = {
     'appId': "1:999208004782:web:cf8047d08b5e438725913f"
 }
 # Initialize FirebaseAdmin
-# firebaseAdmin = pyrebase.initializeApp(configAdmin)
-#
-# auth2 = firebaseAdmin.auth()
+firebaseAdmin = pyrebase.initialize_app(configAdmin)
+
+auth2 = firebaseAdmin.auth()
 
 
 def signIn(request):
@@ -378,7 +378,7 @@ def building_results(request):
 def admin_page(request):
 	email = request.POST.get('email2')
 	password = request.POST.get('pass2')
-	user = auth.sign_in_with_email_and_password(email, password)
+	user = auth2.sign_in_with_email_and_password(email, password)
 	return render(request, 'property_app/adminPage.html')
 
 def admin_sql_bar(request):
