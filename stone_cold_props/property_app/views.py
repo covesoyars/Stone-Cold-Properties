@@ -13,6 +13,7 @@ from dateutil.relativedelta import relativedelta
 import pyrebase
 from django.shortcuts import get_object_or_404
 
+# Connection for employees to firebase login authentification
 config = {
 	'apiKey': "AIzaSyBIiU-vYyoHB3WqAkzgX9B2FtMzyKu9PSk",
 	'authDomain': "database-258713.firebaseapp.com",
@@ -25,6 +26,21 @@ config = {
 firebase = pyrebase.initialize_app(config)
 
 auth = firebase.auth()
+
+# Admin connection
+configAdmin = {
+    'apiKey': "AIzaSyCX3rg4fptOdNpsll4iUu0JgjGHMLiAOOE",
+    'authDomain': "homework4-256814.firebaseapp.com",
+    'databaseURL': "https://homework4-256814.firebaseio.com",
+    'projectId': "homework4-256814",
+    'storageBucket': "homework4-256814.appspot.com",
+    'messagingSenderId': "999208004782",
+    'appId': "1:999208004782:web:cf8047d08b5e438725913f"
+}
+# Initialize FirebaseAdmin
+firebaseAdmin = pyrebase.initializeApp(configAdmin)
+
+auth2 = firebaseAdmin.auth()
 
 
 def signIn(request):
@@ -82,7 +98,7 @@ def search_by_address(request):
 			request.session['result'] = json.dumps(found)
 			request.session.modified = True
 			return redirect('results_by_address')
-
+	# Allows for employees to login if valid entries
 	email = request.POST.get('email')
 	password = request.POST.get('pass')
 	user = auth.sign_in_with_email_and_password(email, password)
@@ -301,3 +317,10 @@ def manager_results_by_owner(request):
 	table = managerInfoTable(query)
 	context = {'table': table}
 	return (HttpResponse(template_name.render(context, request)))
+
+
+def admin_page(request):
+	email = request.POST.get('email2')
+	password = request.POST.get('pass2')
+	user = auth.sign_in_with_email_and_password(email, password)
+	return render(request, 'property_app/adminPage.html')
