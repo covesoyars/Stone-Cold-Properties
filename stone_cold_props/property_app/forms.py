@@ -50,5 +50,10 @@ class managerAddressSearchForm(forms.Form):
     # level = forms.ChoiceField(choices=[(x, x) for x in range(1,4)])
     # expr = forms.ChoiceField(label='Promotion:', choices=[('*', '*'),('1', '1 month'), ('6', '6 months'), ('12', '12 months')])
 
+
+class buildingSearchForm(forms.Form):
+    building = forms.ChoiceField(choices=[(x.building.building_id,x.street) for x in Address.objects.all()])
+
+
 class ManagerOwnerSearchForm(forms.Form):
     owner = forms.ChoiceField(choices=[(x, x) for x in rem_duplicate_owner(wild_card=False)])

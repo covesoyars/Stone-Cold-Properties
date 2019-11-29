@@ -319,6 +319,60 @@ def manager_results_by_owner(request):
 	return (HttpResponse(template_name.render(context, request)))
 
 
+def building_search(request):
+	if request.method == 'POST':
+		form = buildingSearchForm(request.POST)
+		if form.is_valid():
+
+			# get buildings owned by owner:
+			found_building = form.cleaned_data['building'].strip()
+			print(found_building)
+			found_building = Building.objects.get(pk=found_building)
+
+			# get managers that manage any of those buildings:
+			unit_list = Unit.objects.all()
+			#Lease_list = Lease.objects.get(building = found_building)
+			totalRent=0
+			numberOfUnits=0
+			buildingInfo = []
+			for x in unit_list:
+				print(x.building.building_id)
+				print(found_building.building_id)
+				print('___________')
+				if x.building.building_id == found_building.building_id:
+					print(x)
+					totalRent=totalRent + x.rent
+					numberOfUnits += 1
+			cost = Contract.objects.get(building = found_building).payment
+			print(cost)
+			buildingInfo.append(
+				{
+					'building_ID': str(found_building.building_id),
+					'type': str(found_building.type),
+					'floors':str(found_building.floors),
+					'units' : str(numberOfUnits),
+					'total_rent_amount': str(totalRent),
+					'Building_cost' : str(cost)
+				}
+			)
+			request.session['building_search_results'] = json.dumps(buildingInfo)
+			request.session.modified = True
+			return redirect('building_results')
+
+	form = buildingSearchForm()
+	return render(request, 'property_app/building_search.html', {'form': form})
+
+
+def building_results(request):
+	template_name = loader.get_template('property_app/building_search_results.html')
+	query = json.loads(request.session['building_search_results'])
+
+	table = BuildingInfo(query)
+	context = {'table': table}
+	return (HttpResponse(template_name.render(context, request)))
+
+
+
 def admin_page(request):
 	email = request.POST.get('email2')
 	password = request.POST.get('pass2')
