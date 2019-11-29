@@ -29,3 +29,18 @@ class UnitTable(tables.Table):
 	bedrooms = tables.Column()
 	type = tables.Column()
 	sqft = tables.Column()
+
+class SQLResultsTable(tables.Table):
+	static = tables.Column(visible=False)
+
+
+
+
+class BuildingInfo(tables.Table):
+
+	building_ID =  tables.Column()
+	type =  tables.Column()
+	floors = tables.Column()
+	units =  tables.Column()
+	total_rent_amount =  tables.Column()
+	Building_cost = tables.Column()

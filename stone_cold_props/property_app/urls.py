@@ -15,6 +15,11 @@ urlpatterns = [
     path('manager_results_address/', views.manager_results_by_address, name='manager_results_address'),
     path('property_manager_search_owner/', views.manager_search_by_owner, name='search_manager_owner'),
     path('manager_results_owner', views.manager_results_by_owner, name='manager_results_owner'),
+    path('building_search/', views.building_search, name='building_search'),
+    path('building_results/', views.building_results, name='building_results'),
+	path('admin_sql/', views.admin_sql_bar, name='admin_sql'),
+    path('sql_results/', views.sql_results, name='sql_results'),
+
 
 
     ]
