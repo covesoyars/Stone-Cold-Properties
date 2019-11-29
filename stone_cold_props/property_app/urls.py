@@ -20,6 +20,6 @@ urlpatterns = [
 	path('admin_sql/', views.admin_sql_bar, name='admin_sql'),
     path('sql_results/', views.sql_results, name='sql_results'),
     path('adminPage/', views.admin_page, name='admin_page'),
-
+    path('employee_page/', views.employee_page, name='employee_page'),
 
     ]

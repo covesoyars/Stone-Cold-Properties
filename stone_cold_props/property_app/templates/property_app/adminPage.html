@@ -5,9 +5,15 @@
     <title>AdminPage</title>
 </head>
 <body>
- <input type="submit" value="Go to list of managers"> <br><br>
- <input type="submit" value="Go to list of buildings"> <br><br>
- <input type="submit" value="Go to list of expiring contracts"> <br><br>
- <input type="submit" value="Go to list of tenants"> <br><br>
+  Welcome, {{e}}
+  <br><br><br>
+
+  <button type="submit" formaction="/property_app/search_by_address/">Go to address search</button><br><br>
+  <button type="submit" formaction="/property_app/tenant_search/">Go to tenant search</button><br><br>
+  <button type="submit" formaction="/property_app/manager_search/">Go to manager search</button><br><br>
+  <button type="submit" formaction="/property_app/expiring_contracts_search/">Go to expiring contract search</button><br><br>
+  <button type="submit" formaction="/property_app/admin_sql_bar/">Go to admin sql search</button><br><br>
+
+
 </body>
 </html>

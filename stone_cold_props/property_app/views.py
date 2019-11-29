@@ -101,13 +101,19 @@ def search_by_address(request):
 			request.session.modified = True
 			return redirect('results_by_address')
 	# Allows for employees to login if valid entries
-	email = request.POST.get('email')
-	password = request.POST.get('pass')
-	user = auth.sign_in_with_email_and_password(email, password)
+	# email = request.POST.get('email')
+	# password = request.POST.get('pass')
+	# user = auth.sign_in_with_email_and_password(email, password)
 
 	form = searchForm()
 	return render(request, 'property_app/search_by_address.html', {'form': form})
 
+
+def employee_page(request):
+	email = request.POST.get('email')
+	password = request.POST.get('pass')
+	user = auth.sign_in_with_email_and_password(email, password)
+	return render(request, 'property_app/employee_page.html', {"e": email})
 
 def results_by_address(request):
 	template_name = loader.get_template('property_app/results_by_address.html')
@@ -379,7 +385,7 @@ def admin_page(request):
 	email = request.POST.get('email2')
 	password = request.POST.get('pass2')
 	user = auth2.sign_in_with_email_and_password(email, password)
-	return render(request, 'property_app/adminPage.html')
+	return render(request, 'property_app/adminPage.html', {"e": email})
 
 def admin_sql_bar(request):
 
