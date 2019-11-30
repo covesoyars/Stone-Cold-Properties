@@ -1,5 +1,6 @@
 # [START django_app]
 runtime: python37handlers:
+application: stone_cold_props
 # This configures Google App Engine to serve the files in the app's
 # static directory.
 - url: /static
