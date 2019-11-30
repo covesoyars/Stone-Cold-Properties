@@ -75,16 +75,29 @@ WSGI_APPLICATION = 'stone_cold_props.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'Stone_Cold_Properties',
-	'HOST': '127.0.0.1',
-	'PORT': '4054',
-	'USER': 'sql_user1',
-	'PASSWORD': 'sql1'
+if os.getenv('GAE_APPLICATION', None):
+    # Running on production App Engine, so connect to Google Cloud SQL using
+    # the unix socket at /cloudsql/<your-cloudsql-connection string>
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/database-258713:us-central1:instance-508',
+            'USER': 'sql_user1',
+            'PASSWORD': 'sq1',
+            'NAME': 'Stone_Cold_Properties',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME':'Stone_Cold_Properties',
+        'HOST': '127.0.0.1',
+        'PORT': '4054',
+        'USER': 'sql_user1',
+        'PASSWORD': 'sql1'
+        }
+    }
 
 
 # Password validation
