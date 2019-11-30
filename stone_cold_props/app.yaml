@@ -1,4 +1,4 @@
-runtime: python37handlers:
+runtime: python37handlers
 application: stone_cold_props
 
 - url: /static
