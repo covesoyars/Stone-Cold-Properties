@@ -385,6 +385,7 @@ def admin_page(request):
 	email = request.POST.get('email2')
 	password = request.POST.get('pass2')
 	user = auth2.sign_in_with_email_and_password(email, password)
+
 	return render(request, 'property_app/adminPage.html', {"e": email})
 
 def admin_sql_bar(request):

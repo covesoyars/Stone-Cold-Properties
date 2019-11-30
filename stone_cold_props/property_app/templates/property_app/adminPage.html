@@ -7,13 +7,14 @@
 <body>
   Welcome, {{e}}
   <br><br><br>
-
-  <button type="submit" formaction="/property_app/search_by_address/">Go to address search</button><br><br>
-  <button type="submit" formaction="/property_app/tenant_search/">Go to tenant search</button><br><br>
-  <button type="submit" formaction="/property_app/manager_search/">Go to manager search</button><br><br>
+<form action="#" method="get">
+  <button type="submit"  formaction="/property_app/search_by_address/">Search Available Properties</button><br><br>
+  <button type="submit" formaction="/property_app/tenant_search/">Search Tenants</button><br><br>
+  <button type="submit" formaction="/property_app/property_manager_search_address/">Search Managers by Property</button><br><br>
+  <button type="submit" formaction="/property_app/property_manager_search_owner/">Search Managers by Owner</button><br><br>
   <button type="submit" formaction="/property_app/expiring_contracts_search/">Go to expiring contract search</button><br><br>
-  <button type="submit" formaction="/property_app/admin_sql_bar/">Go to admin sql search</button><br><br>
+  <button type="submit" formaction="/property_app/admin_sql/">Go to admin sql search</button><br><br>
 
-
+</form>
 </body>
 </html>
