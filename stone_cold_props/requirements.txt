@@ -1,4 +1,4 @@
-Django==2.2.7
+Django==2.2.21
 django-tables2==2.2.1
 gcloud==0.17.0
 googleapis-common-protos==1.6.0
